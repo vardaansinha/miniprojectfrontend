@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Display</title>
+    <style>
+        body {
+            font-family: 'Source Code Pro', monospace;
+            text-align: center;
+            margin: 50px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #inputField {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+            width: 200px;
+        }
+
+        #submitBtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: white;
+        }
+
+        #submitBtn:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            font-size: 20px;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Enter Something:</h1>
+    <input type="text" id="inputField" placeholder="Type here">
+    <button id="submitBtn" onclick="displayInput()">Submit</button>
+    
+    <div id="result"></div>
+
+    <script>
+        function displayInput() {
+            var inputValue = document.getElementById("inputField").value;
+            var resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = inputValue;
+
+            // Set the entire body content to the result and apply monospace font
+            document.body.innerHTML = "<div style='font-family: \"Source Code Pro\", monospace;'>" + resultDiv.outerHTML + "</div>";
+        }
+    </script>
+
+</body>
+</html>
