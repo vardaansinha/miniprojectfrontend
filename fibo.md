@@ -114,17 +114,17 @@
 
         <div id="recursive-info" class="algorithm-info">
             <h2>Recursive Algorithm</h2>
-            <p>Information about the Fibonacci Recursive Algorithm goes here.</p>
+            <p>The recursive Fibonacci algorithm is based on the mathematical definition of the Fibonacci sequence. It uses a function that calls itself to calculate Fibonacci numbers. While simple, this approach can be inefficient for large numbers due to redundant calculations.</p>
         </div>
 
         <div id="iterative-info" class="algorithm-info">
             <h2>Iterative Algorithm</h2>
-            <p>Information about the Fibonacci Iterative Algorithm goes here.</p>
+            <p>The iterative Fibonacci algorithm uses a loop to calculate Fibonacci numbers. It starts from the bottom, building up the sequence until the desired number is reached. This method is more efficient than the recursive approach and is suitable for large Fibonacci numbers.</p>
         </div>
 
         <div id="memoization-info" class="algorithm-info">
             <h2>Memoization Algorithm</h2>
-            <p>Information about the Fibonacci Memoization Algorithm goes here.</p>
+            <p>The memoization Fibonacci algorithm optimizes the recursive approach by storing previously calculated results in a data structure (memoization table). This prevents redundant calculations, significantly improving performance for large Fibonacci numbers. It combines the simplicity of recursion with the efficiency of dynamic programming.</p>
         </div>
 
     </div>
