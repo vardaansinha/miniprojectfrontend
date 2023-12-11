@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sort Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        .form-group {
+            margin: 20px 0;
+        }
+        select, input {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #visualizationResult {
+            margin-top: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Sort Visualization</h2>
+    <div class="form-group">
+        <label for="sortType">Choose a sort method:</label>
+        <select id="sortType">
+            <option value="binary">Binary Sort</option>
+            <option value="merge" selected>Merge Sort</option>
+            <option value="bubble">Bubble Sort</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="dataLength">Data Length:</label>
+        <input type="number" id="dataLength" placeholder="Enter data length">
+    </div>
+    <button onclick="generateVisualization()">Generate</button>
+    <div id="visualizationResult" style="display:none;">
+        <img src="images/merge_user.png" alt="Merge Sort Visualization">
+        <p>Time taken for merge Sort: 206100.0 ns</p>
+    </div>
+
+    <script>
+        function generateVisualization() {
+            // Hide the result section initially
+            document.getElementById("visualizationResult").style.display = "none";
+    
+            // Set a timeout to display the result after a delay
+            setTimeout(function() {
+                document.getElementById("visualizationResult").style.display = "block";
+            }, 1000); // Delay in milliseconds (1000 ms = 1 second)
+        }
+    </script>
+</body>
+</html>
