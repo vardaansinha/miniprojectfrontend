@@ -124,7 +124,27 @@ button:hover {
         <div id="computation"></div>
         <div id="formula"></div>
         <div id="imageContainer"></div>
+
+        <!-- Buttons for explaining concepts -->
+        <button onclick="toggleExplanation('mergeSort')">Explain Merge Sort</button>
+        <button onclick="toggleExplanation('binarySearch')">Explain Binary Search</button>
+        <button onclick="toggleExplanation('bubbleSort')">Explain Bubble Sort</button>
+
+        <!-- Explanation sections -->
+        <div id="mergeSortExplanation" class="explanation">
+            <h2>Merge Sort</h2>
+            <p>Merge Sort is a divide-and-conquer algorithm that recursively divides an array into halves, sorts each half, and then merges them back together. This process continues until the entire array is sorted. It has a time complexity of O(n log n) and is stable.</p>
+        </div>
+        <div id="binarySearchExplanation" class="explanation">
+            <h2>Binary Search</h2>
+            <p>Binary Search is a searching algorithm used to find the position of a target element in a sorted array. It works by repeatedly dividing the array in half and comparing the target element with the middle element. It has a time complexity of O(log n).</p>
+        </div>
+        <div id="bubbleSortExplanation" class="explanation">
+            <h2>Bubble Sort</h2>
+            <p>Bubble Sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted. It has a time complexity of O(n^2) and is not recommended for large datasets.</p>
+        </div>
     </div>
+
    <script>
     // Define the API endpoint URL
     const apiUrl = 'http://localhost:8085/api/grade/predict';
