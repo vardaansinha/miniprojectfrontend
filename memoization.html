@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Display</title>
+    <title>Sorting Algorithm Visualization</title>
     <style>
         body {
             font-family: 'Source Code Pro', monospace;
@@ -46,6 +46,11 @@
             margin-top: 20px;
             color: #333;
         }
+
+        canvas {
+            max-width: 600px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -55,16 +60,64 @@
     <button id="submitBtn" onclick="displayInput()">Submit</button>
     
     <div id="result"></div>
+    <canvas id="chart"></canvas>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         function displayInput() {
             var inputValue = document.getElementById("inputField").value;
             var resultDiv = document.getElementById("result");
             resultDiv.innerHTML = inputValue;
 
-            // Set the entire body content to the result and apply monospace font
-            document.body.innerHTML = "<div style='font-family: \"Source Code Pro\", monospace;'>" + resultDiv.outerHTML + "</div>";
+            // Create a random array for sorting visualization
+            var array = inputValue.split(',').map(Number);
+
+            // Call the sorting algorithm and update the result div
+            var sortedArray = bubbleSort(array.slice()); // You can replace bubbleSort with mergeSort or insertionSort
+            resultDiv.innerHTML = "Original Array: " + array.join(', ') + "<br>Sorted Array: " + sortedArray.join(', ');
+
+            // Display the sorting visualization
+            displayChart(array, sortedArray);
         }
+
+        function displayChart(originalArray, sortedArray) {
+            var ctx = document.getElementById('chart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: originalArray.map((_, index) => index + 1),
+                    datasets: [{
+                        label: 'Original Array',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        data: originalArray,
+                    },
+                    {
+                        label: 'Sorted Array',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1,
+                        data: sortedArray,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: { beginAtZero: true },
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        // Sorting Algorithms
+        function bubbleSort(arr) {
+            // Your bubble sort implementation here
+            return arr;
+        }
+
+        // You can implement mergeSort and insertionSort functions similarly
+
     </script>
 
 </body>
