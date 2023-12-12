@@ -5,46 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sort Visualization</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 20px;
-        }
-        h2 {
-            color: #333;
-        }
-        .form-group {
-            margin: 20px 0;
-        }
-        select, input {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            font-size: 16px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #visualizationResult {
-            margin-top: 20px;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 5px;
-        }
+        /* Your existing CSS styles */
     </style>
 </head>
 <body>
@@ -63,19 +24,35 @@
     </div>
     <button onclick="generateVisualization()">Generate</button>
     <div id="visualizationResult" style="display:none;">
-        <img src="images/merge_user.png" alt="Merge Sort Visualization">
-        <p>Time taken for merge Sort: 206100.0 ns</p>
+        <img id="sortImage" src="" alt="Sort Visualization">
+        <p id="timeTaken"></p>
     </div>
 
     <script>
         function generateVisualization() {
-            // Hide the result section initially
-            document.getElementById("visualizationResult").style.display = "none";
-    
-            // Set a timeout to display the result after a delay
-            setTimeout(function() {
+            var sortType = document.getElementById("sortType").value;
+            var dataLength = document.getElementById("dataLength").value;
+
+            fetch('http://localhost:8085/api/sort/perform', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    sorterType: sortType,
+                    arraySize: parseInt(dataLength)
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
                 document.getElementById("visualizationResult").style.display = "block";
-            }, 1000); // Delay in milliseconds (1000 ms = 1 second)
+                document.getElementById("sortImage").src = data.chartImageUrl;
+                document.getElementById("timeTaken").textContent = "Time taken for " + data.sorterType + " Sort: " + data.timeTakenNs + " ns";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred while generating the visualization.");
+            });
         }
     </script>
 </body>
