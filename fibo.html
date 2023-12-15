@@ -1,119 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fibonacci Sequence Calculator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fibonacci Sequence Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #title-bar {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #input-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        #result-table th, #result-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        #result-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-  <h1>Fibonacci Sequence Calculator</h1>
-  <p>Enter the nth number you want to calculate:</p>
-  <input type="number" id="n" min="1">
-  <button onclick="calculateFibonacci()">Go!</button>
-  <br>
-  <br>
-  <div id="results"></div>
 
-  <script>
-  function calculateFibonacci() {
-    var n = document.getElementById("n").value;
-    var resultsEl = document.getElementById("results");
+    <div id="title-bar">
+        Fibonacci Sequence Calculator
+    </div>
 
-    // Clear any previous results
-    resultsEl.innerHTML = "";
+    <div id="input-section">
+        <label for="nth-input">Enter the nth number:</label>
+        <input type="number" id="nth-input" />
+        <button onclick="calculateFibonacci()">Go!</button>
+    </div>
 
-    // Calculate the Fibonacci sequence using different algorithms
-    var fibonacciFor = fibonacciForLoop(n);
-    var fibonacciWhile = fibonacciWhileLoop(n);
-    var fibonacciRecursion = fibonacciRecursive(n);
-    var fibonacciStream = fibonacciStream(n);
+    <table id="result-table">
+        <thead>
+            <tr>
+                <th>Method</th>
+                <th>Time</th>
+                <th>Number of Terms</th>
+                <th>First Eight Terms</th>
+            </tr>
+        </thead>
+        <tbody id="result-body">
+            <!-- Results will be populated here -->
+        </tbody>
+    </table>
 
-    // Display the results
-    resultsEl.innerHTML += `
-      <h2>Algorithm Comparison</h2>
-      <table>
-        <tr>
-          <th>Method</th>
-          <th>Time</th>
-          <th>Number</th>
-          <th>List</th>
-        </tr>
-        <tr>
-          <td>For Loop</td>
-          <td>${fibonacciFor.time} ms</td>
-          <td>${n}</td>
-          <td>${fibonacciFor.sequence}</td>
-        </tr>
-        <tr>
-          <td>While Loop</td>
-          <td>${fibonacciWhile.time} ms</td>
-          <td>${n}</td>
-          <td>${fibonacciWhile.sequence}</td>
-        </tr>
-        <tr>
-          <td>Recursion</td>
-          <td>${fibonacciRecursion.time} ms</td>
-          <td>${n}</td>
-          <td>${fibonacciRecursion.sequence}</td>
-        </tr>
-        <tr>
-          <td>Stream</td>
-          <td>${fibonacciStream.time} ms</td>
-          <td>${n}</td>
-          <td>${fibonacciStream.sequence}</td>
-        </tr>
-      </table>
-    `;
-  }
+    <div id="algorithm-section">
+        <p>Comparison of different algorithms:</p>
+        <!-- Add content comparing algorithms here -->
+    </div>
 
-  // Functions to calculate the Fibonacci sequence using different algorithms
-  function fibonacciForLoop(n) {
-    var start = performance.now();
-    var sequence = [0, 1];
-    for (var i = 2; i <= n; i++) {
-      sequence.push(sequence[i - 1] + sequence[i - 2]);
-    }
-    var end = performance.now();
-    return { time: (end - start).toFixed(2), sequence: sequence.join(", ") };
-  }
+    <script>
+        function calculateFibonacci() {
+            const nthInput = document.getElementById('nth-input').value;
+            
+            // Check if nthInput is a positive integer
+            if (!isNaN(nthInput) && nthInput > 0 && nthInput % 1 === 0) {
+                const startTime = performance.now(); // Record start time
 
-  function fibonacciWhileLoop(n) {
-    var start = performance.now();
-    var a = 0, b = 1;
-    var sequence = [];
-    for (var i = 0; i < n; i++) {
-      sequence.push(a);
-      a = b;
-      b = a + b;
-    }
-    var end = performance.now();
-    return { time: (end - start).toFixed(2), sequence: sequence.join(", ") };
-  }
+                // Implement Fibonacci calculation logic here
+                const fibonacciResult = calculateFibonacciSequence(parseInt(nthInput));
 
-  function fibonacciRecursive(n) {
-    var start = performance.now();
-    if (n === 0) {
-      return 0;
-    } else if (n === 1) {
-      return 1;
-    } else {
-      return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
-    }
-    var end = performance.now();
-    return { time: (end - start).toFixed(2) };
-  }
+                const endTime = performance.now(); // Record end time
+                const elapsedTime = endTime - startTime;
 
-  function fibonacciStream(n) {
-    var start = performance.now();
-    var a = 0, b = 1;
-    var sequence = [];
-    for (var i = 0; i < n; i++) {
-      sequence.push(a);
-      [a, b] = [b, a + b];
-    }
-    var end = performance.now();
-    return { time: (end - start).toFixed(2), sequence: sequence.join(", ") };
-  }
-  </script>
+                // Update result table
+                const resultTableBody = document.getElementById('result-body');
+                resultTableBody.innerHTML = `
+                    <tr>
+                        <td>Recursion</td>
+                        <td>${elapsedTime.toFixed(4)} ms</td>
+                        <td>${nthInput}</td>
+                        <td>${fibonacciResult.slice(0, 8).join(', ')}</td>
+                    </tr>
+                    <!-- Add rows for other methods if needed -->
+                `;
+            } else {
+                alert('Please enter a positive integer.');
+            }
+        }
+
+        function calculateFibonacciSequence(n) {
+            // Implement Fibonacci calculation logic here
+            // This example uses a simple recursive approach
+            if (n <= 1) {
+                return Array(n).fill(1);
+            } else {
+                const sequence = calculateFibonacciSequence(n - 1);
+                sequence.push(sequence[sequence.length - 1] + sequence[sequence.length - 2]);
+                return sequence;
+            }
+        }
+    </script>
+
 </body>
 </html>
