@@ -1,105 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fibonacci Sequence Calculator</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f7;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-        h2 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin: 15px 0;
-        }
-        label {
-            font-weight: 600;
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-        }
-        select, input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-        }
-        button {
-            width: 100%;
-            padding: 12px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #visualizationResult {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
-        p {
-            margin-top: 15px;
-            color: #444;
-            font-size: 16px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fibonacci Sequence Calculator</title>
 </head>
 <body>
-    <h2>Fibonacci Sequence Calculator</h2>
-    <div class="form-group">
-        <label for="nthNumber">Enter the nth number:</label>
-        <input type="number" id="nthNumber" placeholder="Enter nth number">
-    </div>
-    <button onclick="calculateFibonacci()">Go!</button>
-    <div id="visualizationResult" style="display:none;">
-        <p id="calculationResult"></p>
-    </div>
-    <script>
-        function calculateFibonacci() {
-            var nthNumber = document.getElementById("nthNumber").value;
+  <h1>Fibonacci Sequence Calculator</h1>
+  <p>Enter the nth number you want to calculate:</p>
+  <input type="number" id="n" min="1">
+  <button onclick="calculateFibonacci()">Go!</button>
+  <br>
+  <br>
+  <div id="results"></div>
 
-            fetch('http://localhost:8085/api/fibonacci/calculate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    nthNumber: parseInt(nthNumber)
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("visualizationResult").style.display = "block";
-                document.getElementById("calculationResult").textContent = "Fibonacci sequence for " + nthNumber + ": " + data.sequence.join(", ");
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("An error occurred while calculating the Fibonacci sequence.");
-            });
-        }
-    </script>
+  <script>
+  function calculateFibonacci() {
+    var n = document.getElementById("n").value;
+    var resultsEl = document.getElementById("results");
+
+    // Clear any previous results
+    resultsEl.innerHTML = "";
+
+    // Calculate the Fibonacci sequence using different algorithms
+    var fibonacciFor = fibonacciForLoop(n);
+    var fibonacciWhile = fibonacciWhileLoop(n);
+    var fibonacciRecursion = fibonacciRecursive(n);
+    var fibonacciStream = fibonacciStream(n);
+
+    // Display the results
+    resultsEl.innerHTML += `
+      <h2>Algorithm Comparison</h2>
+      <table>
+        <tr>
+          <th>Method</th>
+          <th>Time</th>
+          <th>Number</th>
+          <th>List</th>
+        </tr>
+        <tr>
+          <td>For Loop</td>
+          <td>${fibonacciFor.time} ms</td>
+          <td>${n}</td>
+          <td>${fibonacciFor.sequence}</td>
+        </tr>
+        <tr>
+          <td>While Loop</td>
+          <td>${fibonacciWhile.time} ms</td>
+          <td>${n}</td>
+          <td>${fibonacciWhile.sequence}</td>
+        </tr>
+        <tr>
+          <td>Recursion</td>
+          <td>${fibonacciRecursion.time} ms</td>
+          <td>${n}</td>
+          <td>${fibonacciRecursion.sequence}</td>
+        </tr>
+        <tr>
+          <td>Stream</td>
+          <td>${fibonacciStream.time} ms</td>
+          <td>${n}</td>
+          <td>${fibonacciStream.sequence}</td>
+        </tr>
+      </table>
+    `;
+  }
+
+  // Functions to calculate the Fibonacci sequence using different algorithms
+  function fibonacciForLoop(n) {
+    var start = performance.now();
+    var sequence = [0, 1];
+    for (var i = 2; i <= n; i++) {
+      sequence.push(sequence[i - 1] + sequence[i - 2]);
+    }
+    var end = performance.now();
+    return { time: (end - start).toFixed(2), sequence: sequence.join(", ") };
+  }
+
+  function fibonacciWhileLoop(n) {
+    var start = performance.now();
+    var a = 0, b = 1;
+    var sequence = [];
+    for (var i = 0; i < n; i++) {
+      sequence.push(a);
+      a = b;
+      b = a + b;
+    }
+    var end = performance.now();
+    return { time: (end - start).toFixed(2), sequence: sequence.join(", ") };
+  }
+
+  function fibonacciRecursive(n) {
+    var start = performance.now();
+    if (n === 0) {
+      return 0;
+    } else if (n === 1) {
+      return 1;
+    } else {
+      return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
+    }
+    var end = performance.now();
+    return { time: (end - start).toFixed(2) };
+  }
+
+  function fibonacciStream(n) {
+    var start = performance.now();
+    var a = 0, b = 1;
+    var sequence = [];
+    for (var i = 0; i < n; i++) {
+      sequence.push(a);
+      [a, b] = [b, a + b];
+    }
+    var end = performance.now();
+    return { time: (end - start).toFixed(2), sequence: sequence.join(", ") };
+  }
+  </script>
 </body>
 </html>
