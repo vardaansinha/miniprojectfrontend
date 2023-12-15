@@ -93,7 +93,7 @@
                         <td>Recursion</td>
                         <td>${elapsedTime.toFixed(4)} ms</td>
                         <td>${nthInput}</td>
-                        <td>${fibonacciResult.slice(0, 8).join(', ')}</td>
+                        <td>${fibonacciResult.join(', ')}</td>
                     </tr>
                     <!-- Add rows for other methods if needed -->
                 `;
@@ -103,13 +103,14 @@
         }
 
         function calculateFibonacciSequence(n) {
-            // Implement Fibonacci calculation logic here
-            // This example uses a simple recursive approach
-            if (n <= 1) {
-                return Array(n).fill(1);
+            // Implement corrected Fibonacci calculation logic here
+            if (n <= 0) {
+                return [];
+            } else if (n === 1) {
+                return [1];
             } else {
                 const sequence = calculateFibonacciSequence(n - 1);
-                sequence.push(sequence[sequence.length - 1] + sequence[sequence.length - 2]);
+                sequence.push(sequence[sequence.length - 1] + (sequence.length >= 2 ? sequence[sequence.length - 2] : 0));
                 return sequence;
             }
         }
