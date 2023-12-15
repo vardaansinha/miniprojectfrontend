@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VVR Fibonacci Sequence Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,6 +37,11 @@
         #result-table th {
             background-color: #f2f2f2;
         }
+
+        #chart {
+            width: 80%;
+            margin: 20px auto;
+        }
     </style>
 </head>
 <body>
@@ -49,6 +55,8 @@
         <input type="number" id="nth-input" />
         <button onclick="calculateFibonacci()">Go!</button>
     </div>
+
+    <canvas id="chart"></canvas>
 
     <table id="result-table">
         <thead>
@@ -73,20 +81,22 @@
     </div>
 
     <script>
+        const chartData = [];
+
         function calculateFibonacci() {
             const nthInput = document.getElementById('nth-input').value;
-            
-            // Check if nthInput is a positive integer
-            if (!isNaN(nthInput) && nthInput > 0 && nthInput % 1 === 0) {
-                const startTime = performance.now(); // Record start time
 
-                // Implement Fibonacci calculation logic here
+            if (!isNaN(nthInput) && nthInput > 0 && nthInput % 1 === 0) {
+                const startTime = performance.now();
+
                 const fibonacciResult = calculateFibonacciSequence(parseInt(nthInput));
 
-                const endTime = performance.now(); // Record end time
-                const elapsedTime = (endTime - startTime) * 1e6; // Convert to nanoseconds
+                const endTime = performance.now();
+                const elapsedTime = (endTime - startTime) * 1e6;
 
-                // Update result table
+                chartData.push({ x: parseInt(nthInput), y: elapsedTime });
+                updateChart();
+
                 const resultTableBody = document.getElementById('result-body');
                 resultTableBody.innerHTML = `
                     <tr>
@@ -95,7 +105,6 @@
                         <td>${nthInput}</td>
                         <td>${fibonacciResult.join(', ')}</td>
                     </tr>
-                    <!-- Add rows for other methods if needed -->
                 `;
             } else {
                 alert('Please enter a positive integer.');
@@ -103,7 +112,6 @@
         }
 
         function calculateFibonacciSequence(n) {
-            // Implement corrected Fibonacci calculation logic here
             if (n <= 0) {
                 return [];
             } else if (n === 1) {
@@ -113,6 +121,43 @@
                 sequence.push(sequence[sequence.length - 1] + (sequence.length >= 2 ? sequence[sequence.length - 2] : 0));
                 return sequence;
             }
+        }
+
+        function updateChart() {
+            const ctx = document.getElementById('chart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Number of Terms vs. Time',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        data: chartData,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'Number of Terms',
+                            },
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Time (ns)',
+                            },
+                        },
+                    },
+                },
+            });
         }
     </script>
 
