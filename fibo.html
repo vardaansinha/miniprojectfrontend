@@ -84,14 +84,14 @@
                 const fibonacciResult = calculateFibonacciSequence(parseInt(nthInput));
 
                 const endTime = performance.now(); // Record end time
-                const elapsedTime = endTime - startTime;
+                const elapsedTime = (endTime - startTime) * 1e6; // Convert to nanoseconds
 
                 // Update result table
                 const resultTableBody = document.getElementById('result-body');
                 resultTableBody.innerHTML = `
                     <tr>
                         <td>Recursion</td>
-                        <td>${elapsedTime.toFixed(4)} ms</td>
+                        <td>${elapsedTime.toFixed(0)} ns</td>
                         <td>${nthInput}</td>
                         <td>${fibonacciResult.join(', ')}</td>
                     </tr>
