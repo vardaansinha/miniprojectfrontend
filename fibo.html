@@ -6,18 +6,51 @@
     <title>VVR Fibonacci Sequence Calculator</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Existing styles for Fibonacci Sequence Calculator */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
 
-        /* Add your sort visualization styles here */
-        #sort-title-bar {
+        #title-bar {
             text-align: center;
             font-size: 24px;
             margin-bottom: 20px;
         }
 
-        #sort-input-section {
+        #input-section {
             text-align: center;
             margin-bottom: 20px;
+        }
+
+        #result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        #result-table th, #result-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        #result-table th {
+            background-color: #f2f2f2;
+        }
+
+        #chart {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        #sort-title-bar {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 50px; /* Adjust the margin as needed */
+        }
+
+        .form-group {
+            margin: 15px 0;
         }
 
         /* Add any additional styles as needed */
@@ -39,11 +72,25 @@
     <canvas id="chart"></canvas>
 
     <table id="result-table">
-        <!-- Existing result table content -->
+        <thead>
+            <tr>
+                <th>Method</th>
+                <th>Time</th>
+                <th>Number of Terms</th>
+                <th>First Eight Terms</th>
+            </tr>
+        </thead>
+        <tbody id="result-body">
+            <!-- Results will be populated here -->
+        </tbody>
     </table>
 
     <div id="algorithm-section">
-        <!-- Existing algorithm section content -->
+        <p>Comparison of different algorithms:</p>
+        <ul>
+            <li><strong>Recursion:</strong> Simple recursive approach.</li>
+            <!-- Add content for other algorithms if needed -->
+        </ul>
     </div>
 
     <div id="sort-title-bar">
@@ -51,13 +98,24 @@
     </div>
 
     <div class="form-group">
-        <!-- Existing form group content -->
+        <label for="sortType">Choose a sort method:</label>
+        <select id="sortType">
+            <option value="binary">Binary Sort</option>
+            <option value="merge" selected>Merge Sort</option>
+            <option value="bubble">Bubble Sort</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="dataLength">Data Length:</label>
+        <input type="number" id="dataLength" placeholder="Enter data length">
     </div>
 
     <button onclick="generateVisualization()">Generate</button>
 
     <div id="visualizationResult" style="display:none;">
-        <!-- Existing visualization result content -->
+        <img id="sortImage" src="" alt="Sort Visualization">
+        <p id="timeTaken"></p>
     </div>
 
     <!-- Buttons for explaining concepts -->
@@ -66,16 +124,30 @@
     <button onclick="toggleExplanation('bubbleSort')">Explain Bubble Sort</button>
 
     <!-- Explanation sections -->
-    <!-- Existing explanation sections -->
+    <div id="mergeSortExplanation" class="explanation">
+        <h2>Merge Sort</h2>
+        <p>Merge Sort is a divide-and-conquer algorithm that recursively divides an array into halves, sorts each half, and then merges them back together. This process continues until the entire array is sorted. It has a time complexity of O(n log n) and is stable.</p>
+    </div>
+    <div id="binarySearchExplanation" class="explanation">
+        <h2>Binary Search</h2>
+        <p>Binary Search is a searching algorithm used to find the position of a target element in a sorted array. It works by repeatedly dividing the array in half and comparing the target element with the middle element. It has a time complexity of O(log n).</p>
+    </div>
+    <div id="bubbleSortExplanation" class="explanation">
+        <h2>Bubble Sort</h2>
+        <p>Bubble Sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted. It has a time complexity of O(n^2) and is not recommended for large datasets.</p>
+    </div>
 
     <script>
         // Existing JavaScript code for Fibonacci Sequence Calculator
 
-        // Modify the following function for Fibonacci sequence calculation
         function generateVisualization() {
-            // Replace this code with Fibonacci sequence calculation logic
+            var sortType = document.getElementById("sortType").value;
+            var dataLength = document.getElementById("dataLength").value;
+
+            // Replace the following code with Fibonacci sequence calculation logic
             // Use chartData.push({ x: value, y: time }) to update the chart
             // Update the result table with Fibonacci sequence details
+            // You may also need to modify the result table and chart accordingly
         }
     </script>
 
