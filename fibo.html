@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +29,8 @@
             margin-bottom: 20px;
         }
 
-        #result-table th, #result-table td {
+        #result-table th,
+        #result-table td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
@@ -43,20 +45,26 @@
             margin: 20px auto;
         }
 
-        #sort-title-bar {
+        #visualization-section {
             text-align: center;
-            font-size: 24px;
-            margin-top: 50px; /* Adjust the margin as needed */
+            margin-top: 20px;
         }
 
-        .form-group {
-            margin: 15px 0;
+        #visualizationResult {
+            display: none;
         }
 
-        /* Add any additional styles as needed */
+        #sortImage {
+            max-width: 100%;
+            height: auto;
+        }
 
+        #timeTaken {
+            margin-top: 10px;
+        }
     </style>
 </head>
+
 <body>
 
     <div id="title-bar">
@@ -93,63 +101,121 @@
         </ul>
     </div>
 
-    <div id="sort-title-bar">
-        Sort Visualization
-    </div>
-
-    <div class="form-group">
-        <label for="sortType">Choose a sort method:</label>
-        <select id="sortType">
-            <option value="binary">Binary Sort</option>
-            <option value="merge" selected>Merge Sort</option>
-            <option value="bubble">Bubble Sort</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="dataLength">Data Length:</label>
-        <input type="number" id="dataLength" placeholder="Enter data length">
-    </div>
-
-    <button onclick="generateVisualization()">Generate</button>
-
-    <div id="visualizationResult" style="display:none;">
-        <img id="sortImage" src="" alt="Sort Visualization">
-        <p id="timeTaken"></p>
-    </div>
-
-    <!-- Buttons for explaining concepts -->
-    <button onclick="toggleExplanation('mergeSort')">Explain Merge Sort</button>
-    <button onclick="toggleExplanation('binarySearch')">Explain Binary Search</button>
-    <button onclick="toggleExplanation('bubbleSort')">Explain Bubble Sort</button>
-
-    <!-- Explanation sections -->
-    <div id="mergeSortExplanation" class="explanation">
-        <h2>Merge Sort</h2>
-        <p>Merge Sort is a divide-and-conquer algorithm that recursively divides an array into halves, sorts each half, and then merges them back together. This process continues until the entire array is sorted. It has a time complexity of O(n log n) and is stable.</p>
-    </div>
-    <div id="binarySearchExplanation" class="explanation">
-        <h2>Binary Search</h2>
-        <p>Binary Search is a searching algorithm used to find the position of a target element in a sorted array. It works by repeatedly dividing the array in half and comparing the target element with the middle element. It has a time complexity of O(log n).</p>
-    </div>
-    <div id="bubbleSortExplanation" class="explanation">
-        <h2>Bubble Sort</h2>
-        <p>Bubble Sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted. It has a time complexity of O(n^2) and is not recommended for large datasets.</p>
+    <div id="visualization-section">
+        <button onclick="generateVisualization()">Generate Sorting Visualization</button>
+        <div id="visualizationResult">
+            <img id="sortImage" alt="Sorting Visualization" />
+            <p id="timeTaken"></p>
+        </div>
     </div>
 
     <script>
-        // Existing JavaScript code for Fibonacci Sequence Calculator
+        const chartData = [];
+
+        function calculateFibonacci() {
+            const nthInput = document.getElementById('nth-input').value;
+
+            if (!isNaN(nthInput) && nthInput > 0 && nthInput % 1 === 0) {
+                const startTime = performance.now();
+
+                const fibonacciResult = calculateFibonacciSequence(parseInt(nthInput));
+
+                const endTime = performance.now();
+                const elapsedTime = (endTime - startTime) * 1e6;
+
+                chartData.push({ x: parseInt(nthInput), y: elapsedTime });
+                updateChart();
+
+                const resultTableBody = document.getElementById('result-body');
+                resultTableBody.innerHTML = `
+                    <tr>
+                        <td>Recursion</td>
+                        <td>${elapsedTime.toFixed(0)} ns</td>
+                        <td>${nthInput}</td>
+                        <td>${fibonacciResult.join(', ')}</td>
+                    </tr>
+                `;
+            } else {
+                alert('Please enter a positive integer.');
+            }
+        }
+
+        function calculateFibonacciSequence(n) {
+            if (n <= 0) {
+                return [];
+            } else if (n === 1) {
+                return [1];
+            } else {
+                const sequence = calculateFibonacciSequence(n - 1);
+                sequence.push(sequence[sequence.length - 1] + (sequence.length >= 2 ? sequence[sequence.length - 2] : 0));
+                return sequence;
+            }
+        }
+
+        function updateChart() {
+            const ctx = document.getElementById('chart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Number of Terms vs. Time',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        data: chartData,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'Number of Terms',
+                            },
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Time (ns)',
+                            },
+                        },
+                    },
+                },
+            });
+        }
 
         function generateVisualization() {
             var sortType = document.getElementById("sortType").value;
             var dataLength = document.getElementById("dataLength").value;
 
-            // Replace the following code with Fibonacci sequence calculation logic
-            // Use chartData.push({ x: value, y: time }) to update the chart
-            // Update the result table with Fibonacci sequence details
-            // You may also need to modify the result table and chart accordingly
+            fetch('http://localhost:8085/api/sort/perform', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        sorterType: sortType,
+                        arraySize: parseInt(dataLength)
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("visualizationResult").style.display = "block";
+                    document.getElementById("sortImage").src = "http://localhost:8085" + data.chartImageUrl;
+                    document.getElementById("timeTaken").textContent = "Time taken for " + data.sorterType + " Sort: " + data.timeTakenNs + " ns";
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("An error occurred while generating the visualization.");
+                });
         }
     </script>
 
 </body>
+
 </html>
