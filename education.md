@@ -36,7 +36,8 @@
     <h2>Fibonacci Recursive Algorithm</h2>
     <div class="code-container">
         <textarea id="fibonacciRecursiveCode" class="code-editor">function fibonacciRecursive(n) {
-    // Your code here
+    if (n <= 1) return n;
+    return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
 }</textarea>
         <button onclick="runFibonacciRecursive()">Run</button>
     </div>
@@ -44,7 +45,14 @@
     <h2>Fibonacci Iterative Algorithm</h2>
     <div class="code-container">
         <textarea id="fibonacciIterativeCode" class="code-editor">function fibonacciIterative(n) {
-    // Your code here
+    if (n <= 1) return n;
+
+    let fib = [0, 1];
+    for (let i = 2; i <= n; i++) {
+        fib[i] = fib[i - 1] + fib[i - 2];
+    }
+
+    return fib[n];
 }</textarea>
         <button onclick="runFibonacciIterative()">Run</button>
     </div>
@@ -52,7 +60,13 @@
     <h2>Fibonacci Memoization Algorithm</h2>
     <div class="code-container">
         <textarea id="fibonacciMemoizationCode" class="code-editor">function fibonacciMemoization(n, memo = {}) {
-    // Your code here
+    if (n <= 1) return n;
+
+    if (!memo.hasOwnProperty(n)) {
+        memo[n] = fibonacciMemoization(n - 1, memo) + fibonacciMemoization(n - 2, memo);
+    }
+
+    return memo[n];
 }</textarea>
         <button onclick="runFibonacciMemoization()">Run</button>
     </div>
@@ -60,7 +74,31 @@
     <h2>Merge Sorting</h2>
     <div class="code-container">
         <textarea id="mergeSortCode" class="code-editor">function mergeSort(arr) {
-    // Your code here
+    if (arr.length <= 1) return arr;
+
+    const middle = Math.floor(arr.length / 2);
+    const left = arr.slice(0, middle);
+    const right = arr.slice(middle);
+
+    return merge(mergeSort(left), mergeSort(right));
+}
+
+function merge(left, right) {
+    let result = [];
+    let i = 0;
+    let j = 0;
+
+    while (i < left.length && j < right.length) {
+        if (left[i] < right[j]) {
+            result.push(left[i]);
+            i++;
+        } else {
+            result.push(right[j]);
+            j++;
+        }
+    }
+
+    return result.concat(left.slice(i)).concat(right.slice(j));
 }</textarea>
         <button onclick="runMergeSort()">Run</button>
     </div>
@@ -68,60 +106,46 @@
     <h2>Bubble Sorting</h2>
     <div class="code-container">
         <textarea id="bubbleSortCode" class="code-editor">function bubbleSort(arr) {
-    // Your code here
+    const n = arr.length;
+
+    for (let i = 0; i < n - 1; i++) {
+        for (let j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                // Swap arr[j] and arr[j + 1]
+                const temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+
+    return arr;
 }</textarea>
         <button onclick="runBubbleSort()">Run</button>
     </div>
-
-    <h2>Binary Sorting</h2>
-    <div class="code-container">
-        <textarea id="binarySortCode" class="code-editor">function binarySort(arr) {
-    // Your code here
-}</textarea>
         <button onclick="runBinarySort()">Run</button>
     </div>
 
     <script>
         function runFibonacciRecursive() {
             const code = document.getElementById('fibonacciRecursiveCode').value;
-            eval(code);
-            // Call the function with an example input if needed
-            // fibonacciRecursive(5);
+            const n = 5; // Example input
+            const result = eval(`${code} fibonacciRecursive(${n})`);
+            alert(`Result: ${result}`);
         }
 
         function runFibonacciIterative() {
             const code = document.getElementById('fibonacciIterativeCode').value;
-            eval(code);
-            // Call the function with an example input if needed
-            // fibonacciIterative(5);
+            const n = 5; // Example input
+            const result = eval(`${code} fibonacciIterative(${n})`);
+            alert(`Result: ${result}`);
         }
 
         function runFibonacciMemoization() {
             const code = document.getElementById('fibonacciMemoizationCode').value;
-            eval(code);
-            // Call the function with an example input if needed
-            // fibonacciMemoization(5);
-        }
-
-        function runMergeSort() {
-            const code = document.getElementById('mergeSortCode').value;
-            eval(code);
-            // Call the function with an example input if needed
-            // mergeSort([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]);
-        }
-
-        function runBubbleSort() {
-            const code = document.getElementById('bubbleSortCode').value;
-            eval(code);
-            // Call the function with an example input if needed
-            // bubbleSort([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]);
-        }
-
-        function runBinarySort() {
-            const code = document.getElementById('binarySortCode').value;
-            eval(code);
-            // Call the function with an example input if needed
-            // binarySort([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]);
+            const n = 5; // Example input
+            const result = eval(`${code} fibonacciMemoization(${n})`);
+            alert(`Result: ${result}`);
         }
     </script>
 </body>
