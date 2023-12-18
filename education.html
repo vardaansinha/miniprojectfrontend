@@ -53,8 +53,9 @@ public class Fibonacci {
 
     // Main method to test the recursive Fibonacci function
     public static void main(String[] args) {
-        int result = fibonacciRecursive(5); // Example input
-        System.out.println("Result: " + result);
+        // Example: Calculate Fibonacci for n = 5
+        int result = fibonacciRecursive(5);
+        System.out.println("Fibonacci for n = 5: " + result);
     }
 }</code></pre>
         <button onclick="runFibonacciRecursive()">Run</button>
@@ -69,10 +70,12 @@ public class Fibonacci {
     public static int fibonacciIterative(int n) {
         if (n <= 1) return n;
 
+        // Create an array to store Fibonacci sequence
         int[] fib = new int[n + 1];
         fib[0] = 0;
         fib[1] = 1;
 
+        // Build the Fibonacci sequence iteratively
         for (int i = 2; i <= n; i++) {
             fib[i] = fib[i - 1] + fib[i - 2];
         }
@@ -82,8 +85,9 @@ public class Fibonacci {
 
     // Main method to test the iterative Fibonacci function
     public static void main(String[] args) {
-        int result = fibonacciIterative(5); // Example input
-        System.out.println("Result: " + result);
+        // Example: Calculate Fibonacci for n = 5
+        int result = fibonacciIterative(5);
+        System.out.println("Fibonacci for n = 5: " + result);
     }
 }</code></pre>
         <button onclick="runFibonacciIterative()">Run</button>
@@ -113,8 +117,9 @@ public class Fibonacci {
 
     // Main method to test the memoized Fibonacci function
     public static void main(String[] args) {
-        int result = fibonacciMemoization(5); // Example input
-        System.out.println("Result: " + result);
+        // Example: Calculate Fibonacci for n = 5
+        int result = fibonacciMemoization(5);
+        System.out.println("Fibonacci for n = 5: " + result);
     }
 }</code></pre>
         <button onclick="runFibonacciMemoization()">Run</button>
@@ -131,6 +136,7 @@ public class MergeSort {
     public static int[] mergeSort(int[] arr) {
         if (arr.length <= 1) return arr;
 
+        // Split the array into halves and recursively sort each half
         int middle = arr.length / 2;
         int[] left = Arrays.copyOfRange(arr, 0, middle);
         int[] right = Arrays.copyOfRange(arr, middle, arr.length);
@@ -143,6 +149,7 @@ public class MergeSort {
         int[] result = new int[left.length + right.length];
         int i = 0, j = 0, k = 0;
 
+        // Merge the two arrays in sorted order
         while (i < left.length && j < right.length) {
             if (left[i] < right[j]) {
                 result[k++] = left[i++];
@@ -151,6 +158,7 @@ public class MergeSort {
             }
         }
 
+        // Copy any remaining elements from both arrays
         while (i < left.length) {
             result[k++] = left[i++];
         }
@@ -164,9 +172,10 @@ public class MergeSort {
 
     // Main method to test the merge sort function
     public static void main(String[] args) {
-        int[] arr = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5}; // Example input
+        // Example: Sort an array
+        int[] arr = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
         int[] result = mergeSort(arr);
-        System.out.println("Result: " + Arrays.toString(result));
+        System.out.println("Sorted Array: " + Arrays.toString(result));
     }
 }</code></pre>
         <button onclick="runMergeSort()">Run</button>
@@ -183,10 +192,12 @@ public class BubbleSort {
     public static int[] bubbleSort(int[] arr) {
         int n = arr.length;
 
+        // Traverse through all array elements
         for (int i = 0; i < n - 1; i++) {
+            // Last i elements are already in place, so we don't need to check them
             for (int j = 0; j < n - i - 1; j++) {
+                // Swap if the element found is greater than the next element
                 if (arr[j] > arr[j + 1]) {
-                    // Swap arr[j] and arr[j + 1]
                     int temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
@@ -199,9 +210,10 @@ public class BubbleSort {
 
     // Main method to test the bubble sort function
     public static void main(String[] args) {
-        int[] arr = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5}; // Example input
+        // Example: Sort an array
+        int[] arr = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
         int[] result = bubbleSort(arr);
-        System.out.println("Result: " + Arrays.toString(result));
+        System.out.println("Sorted Array: " + Arrays.toString(result));
     }
 }</code></pre>
         <button onclick="runBubbleSort()">Run</button>
@@ -217,15 +229,16 @@ public class BinarySearch {
         int low = 0;
         int high = arr.length - 1;
 
+        // Perform binary search until the target is found or the search space is empty
         while (low <= high) {
             int mid = low + (high - low) / 2;
 
             if (arr[mid] == target) {
                 return mid; // Target found
             } else if (arr[mid] < target) {
-                low = mid + 1;
+                low = mid + 1; // Discard the left half
             } else {
-                high = mid - 1;
+                high = mid - 1; // Discard the right half
             }
         }
 
@@ -234,10 +247,11 @@ public class BinarySearch {
 
     // Main method to test the binary search function
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // Sorted array (example input)
-        int target = 5; // Example target value
+        // Example: Search for the target value in a sorted array
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int target = 5;
         int result = binarySearch(arr, target);
-        System.out.println("Result: " + result);
+        System.out.println("Index of " + target + ": " + result);
     }
 }</code></pre>
         <button onclick="runBinarySearch()">Run</button>
