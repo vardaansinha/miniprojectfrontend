@@ -27,7 +27,6 @@
         .code-editor {
             height: 200px;
             font-size: 14px;
-            line-height: 1.5;
             color: #fff;
             padding: 15px;
             box-sizing: border-box;
@@ -44,26 +43,29 @@
 <body>
     <h2>Fibonacci Recursive Algorithm</h2>
     <div class="code-container">
-        <textarea id="fibonacciRecursiveCode" class="code-editor language-java line-numbers">// Java code for Fibonacci Recursive Algorithm
+        <pre class="line-numbers"><code class="language-java">// Java code for Fibonacci Recursive Algorithm
 public class Fibonacci {
+    // Recursive function to calculate Fibonacci
     public static int fibonacciRecursive(int n) {
         if (n <= 1) return n;
         return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
     }
 
+    // Main method to test the recursive Fibonacci function
     public static void main(String[] args) {
         int result = fibonacciRecursive(5); // Example input
         System.out.println("Result: " + result);
     }
-}</textarea>
+}</code></pre>
         <button onclick="runFibonacciRecursive()">Run</button>
     </div>
 
     <!-- Fibonacci Iterative Algorithm -->
     <h2>Fibonacci Iterative Algorithm</h2>
     <div class="code-container">
-        <textarea id="fibonacciIterativeCode" class="code-editor language-java line-numbers">// Java code for Fibonacci Iterative Algorithm
+        <pre class="line-numbers"><code class="language-java">// Java code for Fibonacci Iterative Algorithm
 public class Fibonacci {
+    // Iterative function to calculate Fibonacci
     public static int fibonacciIterative(int n) {
         if (n <= 1) return n;
 
@@ -78,26 +80,30 @@ public class Fibonacci {
         return fib[n];
     }
 
+    // Main method to test the iterative Fibonacci function
     public static void main(String[] args) {
         int result = fibonacciIterative(5); // Example input
         System.out.println("Result: " + result);
     }
-}</textarea>
+}</code></pre>
         <button onclick="runFibonacciIterative()">Run</button>
     </div>
 
     <!-- Fibonacci Memoization Algorithm -->
     <h2>Fibonacci Memoization Algorithm</h2>
     <div class="code-container">
-        <textarea id="fibonacciMemoizationCode" class="code-editor language-java line-numbers">// Java code for Fibonacci Memoization Algorithm
+        <pre class="line-numbers"><code class="language-java">// Java code for Fibonacci Memoization Algorithm
 import java.util.HashMap;
 
 public class Fibonacci {
+    // Memoization map to store calculated Fibonacci values
     private static HashMap<Integer, Integer> memo = new HashMap<>();
 
+    // Memoized recursive function to calculate Fibonacci
     public static int fibonacciMemoization(int n) {
         if (n <= 1) return n;
 
+        // Check if the value is already memoized
         if (!memo.containsKey(n)) {
             memo.put(n, fibonacciMemoization(n - 1) + fibonacciMemoization(n - 2));
         }
@@ -105,21 +111,23 @@ public class Fibonacci {
         return memo.get(n);
     }
 
+    // Main method to test the memoized Fibonacci function
     public static void main(String[] args) {
         int result = fibonacciMemoization(5); // Example input
         System.out.println("Result: " + result);
     }
-}</textarea>
+}</code></pre>
         <button onclick="runFibonacciMemoization()">Run</button>
     </div>
 
     <!-- Merge Sorting -->
     <h2>Merge Sorting</h2>
     <div class="code-container">
-        <textarea id="mergeSortCode" class="code-editor language-java line-numbers">// Java code for Merge Sorting
+        <pre class="line-numbers"><code class="language-java">// Java code for Merge Sorting
 import java.util.Arrays;
 
 public class MergeSort {
+    // Main function to perform merge sort on an array
     public static int[] mergeSort(int[] arr) {
         if (arr.length <= 1) return arr;
 
@@ -130,6 +138,7 @@ public class MergeSort {
         return merge(mergeSort(left), mergeSort(right));
     }
 
+    // Helper function to merge two sorted arrays
     private static int[] merge(int[] left, int[] right) {
         int[] result = new int[left.length + right.length];
         int i = 0, j = 0, k = 0;
@@ -153,22 +162,24 @@ public class MergeSort {
         return result;
     }
 
+    // Main method to test the merge sort function
     public static void main(String[] args) {
         int[] arr = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5}; // Example input
         int[] result = mergeSort(arr);
         System.out.println("Result: " + Arrays.toString(result));
     }
-}</textarea>
+}</code></pre>
         <button onclick="runMergeSort()">Run</button>
     </div>
 
     <!-- Bubble Sorting -->
     <h2>Bubble Sorting</h2>
     <div class="code-container">
-        <textarea id="bubbleSortCode" class="code-editor language-java line-numbers">// Java code for Bubble Sorting
+        <pre class="line-numbers"><code class="language-java">// Java code for Bubble Sorting
 import java.util.Arrays;
 
 public class BubbleSort {
+    // Main function to perform bubble sort on an array
     public static int[] bubbleSort(int[] arr) {
         int n = arr.length;
 
@@ -186,20 +197,22 @@ public class BubbleSort {
         return arr;
     }
 
+    // Main method to test the bubble sort function
     public static void main(String[] args) {
         int[] arr = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5}; // Example input
         int[] result = bubbleSort(arr);
         System.out.println("Result: " + Arrays.toString(result));
     }
-}</textarea>
+}</code></pre>
         <button onclick="runBubbleSort()">Run</button>
     </div>
 
     <!-- Binary Search -->
     <h2>Binary Search</h2>
     <div class="code-container">
-        <textarea id="binarySearchCode" class="code-editor language-java line-numbers">// Java code for Binary Search
+        <pre class="line-numbers"><code class="language-java">// Java code for Binary Search
 public class BinarySearch {
+    // Main function to perform binary search on a sorted array
     public static int binarySearch(int[] arr, int target) {
         int low = 0;
         int high = arr.length - 1;
@@ -219,13 +232,14 @@ public class BinarySearch {
         return -1; // Target not found
     }
 
+    // Main method to test the binary search function
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // Sorted array (example input)
         int target = 5; // Example target value
         int result = binarySearch(arr, target);
         System.out.println("Result: " + result);
     }
-}</textarea>
+}</code></pre>
         <button onclick="runBinarySearch()">Run</button>
     </div>
 
