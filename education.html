@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Algorithms</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/line-numbers/prism-line-numbers.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .code-container {
+            margin-bottom: 20px;
+            background-color: #222;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .code-editor {
+            height: 200px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            padding: 15px;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+
+        button {
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Fibonacci Recursive Algorithm</h2>
+    <div class="code-container">
+        <textarea id="fibonacciRecursiveCode" class="code-editor language-java line-numbers">// Java code for Fibonacci Recursive Algorithm
+public class Fibonacci {
+    public static int fibonacciRecursive(int n) {
+        if (n <= 1) return n;
+        return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
+    }
+
+    public static void main(String[] args) {
+        int result = fibonacciRecursive(5); // Example input
+        System.out.println("Result: " + result);
+    }
+}</textarea>
+        <button onclick="runFibonacciRecursive()">Run</button>
+    </div>
+
+    <!-- Fibonacci Iterative Algorithm -->
+    <h2>Fibonacci Iterative Algorithm</h2>
+    <div class="code-container">
+        <textarea id="fibonacciIterativeCode" class="code-editor language-java line-numbers">// Java code for Fibonacci Iterative Algorithm
+public class Fibonacci {
+    public static int fibonacciIterative(int n) {
+        if (n <= 1) return n;
+
+        int[] fib = new int[n + 1];
+        fib[0] = 0;
+        fib[1] = 1;
+
+        for (int i = 2; i <= n; i++) {
+            fib[i] = fib[i - 1] + fib[i - 2];
+        }
+
+        return fib[n];
+    }
+
+    public static void main(String[] args) {
+        int result = fibonacciIterative(5); // Example input
+        System.out.println("Result: " + result);
+    }
+}</textarea>
+        <button onclick="runFibonacciIterative()">Run</button>
+    </div>
+
+    <!-- Fibonacci Memoization Algorithm -->
+    <h2>Fibonacci Memoization Algorithm</h2>
+    <div class="code-container">
+        <textarea id="fibonacciMemoizationCode" class="code-editor language-java line-numbers">// Java code for Fibonacci Memoization Algorithm
+import java.util.HashMap;
+
+public class Fibonacci {
+    private static HashMap<Integer, Integer> memo = new HashMap<>();
+
+    public static int fibonacciMemoization(int n) {
+        if (n <= 1) return n;
+
+        if (!memo.containsKey(n)) {
+            memo.put(n, fibonacciMemoization(n - 1) + fibonacciMemoization(n - 2));
+        }
+
+        return memo.get(n);
+    }
+
+    public static void main(String[] args) {
+        int result = fibonacciMemoization(5); // Example input
+        System.out.println("Result: " + result);
+    }
+}</textarea>
+        <button onclick="runFibonacciMemoization()">Run</button>
+    </div>
+
+    <!-- Merge Sorting -->
+    <h2>Merge Sorting</h2>
+    <div class="code-container">
+        <textarea id="mergeSortCode" class="code-editor language-java line-numbers">// Java code for Merge Sorting
+import java.util.Arrays;
+
+public class MergeSort {
+    public static int[] mergeSort(int[] arr) {
+        if (arr.length <= 1) return arr;
+
+        int middle = arr.length / 2;
+        int[] left = Arrays.copyOfRange(arr, 0, middle);
+        int[] right = Arrays.copyOfRange(arr, middle, arr.length);
+
+        return merge(mergeSort(left), mergeSort(right));
+    }
+
+    private static int[] merge(int[] left, int[] right) {
+        int[] result = new int[left.length + right.length];
+        int i = 0, j = 0, k = 0;
+
+        while (i < left.length && j < right.length) {
+            if (left[i] < right[j]) {
+                result[k++] = left[i++];
+            } else {
+                result[k++] = right[j++];
+            }
+        }
+
+        while (i < left.length) {
+            result[k++] = left[i++];
+        }
+
+        while (j < right.length) {
+            result[k++] = right[j++];
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5}; // Example input
+        int[] result = mergeSort(arr);
+        System.out.println("Result: " + Arrays.toString(result));
+    }
+}</textarea>
+        <button onclick="runMergeSort()">Run</button>
+    </div>
+
+    <!-- Bubble Sorting -->
+    <h2>Bubble Sorting</h2>
+    <div class="code-container">
+        <textarea id="bubbleSortCode" class="code-editor language-java line-numbers">// Java code for Bubble Sorting
+import java.util.Arrays;
+
+public class BubbleSort {
+    public static int[] bubbleSort(int[] arr) {
+        int n = arr.length;
+
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    // Swap arr[j] and arr[j + 1]
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+
+        return arr;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5}; // Example input
+        int[] result = bubbleSort(arr);
+        System.out.println("Result: " + Arrays.toString(result));
+    }
+}</textarea>
+        <button onclick="runBubbleSort()">Run</button>
+    </div>
+
+    <!-- Binary Search -->
+    <h2>Binary Search</h2>
+    <div class="code-container">
+        <textarea id="binarySearchCode" class="code-editor language-java line-numbers">// Java code for Binary Search
+public class BinarySearch {
+    public static int binarySearch(int[] arr, int target) {
+        int low = 0;
+        int high = arr.length - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (arr[mid] == target) {
+                return mid; // Target found
+            } else if (arr[mid] < target) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        return -1; // Target not found
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // Sorted array (example input)
+        int target = 5; // Example target value
+        int result = binarySearch(arr, target);
+        System.out.println("Result: " + result);
+    }
+}</textarea>
+        <button onclick="runBinarySearch()">Run</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+    <script>
+        // Initialize Prism after the code has been added to the DOM
+        Prism.highlightAll();
+
+        // Additional function to refresh Prism after updating code
+        function refreshPrism() {
+            Prism.highlightAll();
+        }
+
+        // Sample run functions (you can replace these with actual logic)
+        function runFibonacciRecursive() {
+            console.log("Running Fibonacci Recursive");
+        }
+
+        function runFibonacciIterative() {
+            console.log("Running Fibonacci Iterative");
+        }
+
+        function runFibonacciMemoization() {
+            console.log("Running Fibonacci Memoization");
+        }
+
+        function runMergeSort() {
+            console.log("Running Merge Sort");
+        }
+
+        function runBubbleSort() {
+            console.log("Running Bubble Sort");
+        }
+
+        function runBinarySearch() {
+            console.log("Running Binary Search");
+        }
+    </script>
+</body>
+</html>
